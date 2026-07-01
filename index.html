@@ -23,13 +23,19 @@
   </div>
 
   <section>
-    <h2>部位から探す</h2>
+    <h2>動画を探す</h2>
+    <input id="search-input" class="search-input" type="search" placeholder="キーワード・部位・症状で検索（例: 足首、捻挫）" autocomplete="off">
+    <div class="filter-label">部位</div>
     <div class="categories" id="categories"></div>
+    <div class="filter-label">タグ</div>
+    <div class="tags-filter" id="tags-filter"></div>
+    <button id="clear-filters" class="clear-btn" hidden>絞り込みを解除</button>
   </section>
 
   <section>
-    <h2>おすすめ動画</h2>
+    <h2 id="list-heading">おすすめ動画</h2>
     <div class="video-list" id="video-list"></div>
+    <p id="empty-msg" class="empty-msg" hidden>該当する動画が見つかりませんでした。</p>
   </section>
 
   <section>
