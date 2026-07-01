@@ -1,0 +1,9 @@
+{
+  "audiences": [
+    { "slug": "athlete", "name": "選手向け" },
+    { "slug": "parent", "name": "保護者向け" },
+    { "slug": "coach", "name": "コーチ向け" },
+    { "slug": "sports", "name": "スポーツ全般" }
+  ],
+  "posts": []
+}

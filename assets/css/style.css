@@ -119,6 +119,46 @@ section h2 {
   font-size: 14px;
 }
 
+/* Instagram section */
+.audience-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 14px; }
+.audience-tab {
+  padding: 8px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+.audience-tab.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+.ig-card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin: 12px 0;
+  box-shadow: var(--shadow);
+}
+.ig-audience { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+.ig-audience-tag {
+  font-size: 11px;
+  padding: 2px 8px;
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text-sub);
+}
+.ig-comment {
+  margin: 4px 0 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
 /* Video cards */
 .video-list { display: grid; gap: 12px; }
 .video-card {
