@@ -118,4 +118,20 @@ function updateClearBtn() {
   btn.hidden = !(state.query || state.category || state.tag);
 }
 
-document.addEventListener('DOMContentLoaded', loadTop);
+function initLayoutSwitcher() {
+  const grid = document.getElementById('content-grid');
+  const buttons = document.querySelectorAll('.layout-btn');
+  const saved = localStorage.getItem('igLayout') || 'stack';
+  const apply = layout => {
+    grid.dataset.layout = layout;
+    buttons.forEach(b => b.classList.toggle('active', b.dataset.layout === layout));
+    localStorage.setItem('igLayout', layout);
+  };
+  apply(saved);
+  buttons.forEach(b => b.onclick = () => apply(b.dataset.layout));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadTop();
+  initLayoutSwitcher();
+});

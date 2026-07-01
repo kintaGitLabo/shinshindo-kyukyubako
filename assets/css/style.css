@@ -26,9 +26,81 @@ body {
 a { color: var(--color-primary-dark); }
 
 .container {
-  max-width: 720px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 16px;
+}
+.main-col { max-width: 720px; margin: 0 auto; width: 100%; }
+
+/* Layout switcher */
+.layout-switcher {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  padding: 10px 12px;
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  margin: 12px 0;
+  font-size: 13px;
+}
+.layout-label { color: var(--color-text-sub); }
+.layout-btn {
+  border: 1px solid var(--color-border);
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+}
+.layout-btn.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+/* Content grid — desktop */
+.content-grid { display: grid; gap: 24px; }
+.content-grid[data-layout="stack"] {
+  grid-template-columns: 1fr;
+}
+.content-grid[data-layout="stack"] .main-col { grid-row: 1; }
+.content-grid[data-layout="stack"] .ig-aside { grid-row: 2; }
+
+@media (min-width: 900px) {
+  .content-grid[data-layout="left"] {
+    grid-template-columns: 320px 1fr;
+  }
+  .content-grid[data-layout="left"] .ig-aside { grid-column: 1; grid-row: 1; }
+  .content-grid[data-layout="left"] .main-col { grid-column: 2; grid-row: 1; margin: 0; }
+  .content-grid[data-layout="right"] {
+    grid-template-columns: 1fr 320px;
+  }
+  .content-grid[data-layout="right"] .main-col { grid-column: 1; grid-row: 1; margin: 0; }
+  .content-grid[data-layout="right"] .ig-aside { grid-column: 2; grid-row: 1; }
+  .ig-aside {
+    position: sticky;
+    top: 12px;
+    align-self: start;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+  }
+}
+
+/* Mobile — always stack, videos first, IG below */
+@media (max-width: 899px) {
+  .content-grid { grid-template-columns: 1fr; }
+  .layout-switcher { display: none; }
+  .content-grid .main-col { grid-row: 1; }
+  .content-grid .ig-aside { grid-row: 2; }
+  #ig-section h2 { font-size: 16px; }
+  .ig-card { padding: 10px; }
+  #posts-list.compact { max-height: 720px; overflow: hidden; position: relative; }
+  #posts-list.compact::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+    background: linear-gradient(transparent, #fff);
+    pointer-events: none;
+  }
 }
 
 /* Header */

@@ -47,7 +47,39 @@
     if (window.instgrm && window.instgrm.Embeds) {
       window.instgrm.Embeds.process();
     }
+    updateCompactToggle(filtered.length);
   }
+
+  function updateCompactToggle(total) {
+    const box = document.getElementById('posts-list');
+    const btn = document.getElementById('posts-toggle');
+    const isMobile = window.matchMedia('(max-width: 899px)').matches;
+    if (!isMobile || total <= 1) {
+      box.classList.remove('compact');
+      btn.hidden = true;
+      return;
+    }
+    btn.hidden = false;
+    const isCompact = !box.dataset.expanded;
+    if (isCompact) {
+      box.classList.add('compact');
+      btn.textContent = `他の投稿を見る（残り${total - 1}件）`;
+    } else {
+      box.classList.remove('compact');
+      btn.textContent = '閉じる';
+    }
+    btn.onclick = () => {
+      if (box.dataset.expanded) { delete box.dataset.expanded; }
+      else { box.dataset.expanded = '1'; }
+      updateCompactToggle(total);
+    };
+  }
+
+  window.addEventListener('resize', () => {
+    const filtered = (data.posts || []).filter(p => p.published !== false)
+      .filter(p => !state.audience || (p.audience || []).includes(state.audience));
+    updateCompactToggle(filtered.length);
+  });
 
   renderTabs();
   renderPosts();

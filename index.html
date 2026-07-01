@@ -22,36 +22,50 @@
     <ul id="emergency-list"></ul>
   </div>
 
-  <section>
-    <h2>動画を探す</h2>
-    <input id="search-input" class="search-input" type="search" placeholder="キーワード・部位・症状で検索（例: 足首、捻挫）" autocomplete="off">
-    <div class="filter-label">部位</div>
-    <div class="categories" id="categories"></div>
-    <div class="filter-label">タグ</div>
-    <div class="tags-filter" id="tags-filter"></div>
-    <button id="clear-filters" class="clear-btn" hidden>絞り込みを解除</button>
-  </section>
+  <div class="layout-switcher" id="layout-switcher">
+    <span class="layout-label">お知らせの表示位置：</span>
+    <button data-layout="left" class="layout-btn">左サイド</button>
+    <button data-layout="right" class="layout-btn">右サイド</button>
+    <button data-layout="stack" class="layout-btn">下に表示</button>
+  </div>
 
-  <section>
-    <h2 id="list-heading">おすすめ動画</h2>
-    <div class="video-list" id="video-list"></div>
-    <p id="empty-msg" class="empty-msg" hidden>該当する動画が見つかりませんでした。</p>
-  </section>
+  <div class="content-grid" id="content-grid" data-layout="stack">
+    <div class="main-col">
+      <section>
+        <h2>動画を探す</h2>
+        <input id="search-input" class="search-input" type="search" placeholder="キーワード・部位・症状で検索（例: 足首、捻挫）" autocomplete="off">
+        <div class="filter-label">部位</div>
+        <div class="categories" id="categories"></div>
+        <div class="filter-label">タグ</div>
+        <div class="tags-filter" id="tags-filter"></div>
+        <button id="clear-filters" class="clear-btn" hidden>絞り込みを解除</button>
+      </section>
 
-  <section id="ig-section">
-    <h2>心身堂からのお知らせ</h2>
-    <p style="font-size:13px;color:var(--color-text-sub);margin:0 0 8px;">Instagram投稿から、スポーツ現場に役立つ情報をお届けします。</p>
-    <div class="audience-tabs" id="audience-tabs"></div>
-    <div id="posts-list"></div>
-    <p id="posts-empty" class="empty-msg" hidden>該当する投稿はまだありません。</p>
-  </section>
+      <section>
+        <h2 id="list-heading">おすすめ動画</h2>
+        <div class="video-list" id="video-list"></div>
+        <p id="empty-msg" class="empty-msg" hidden>該当する動画が見つかりませんでした。</p>
+      </section>
 
-  <section>
-    <h2>相談・注文</h2>
-    <a id="btn-line" class="btn btn-line" href="#">LINEで相談する</a>
-    <a class="btn btn-primary" href="#">来院予約をする</a>
-    <a class="btn btn-outline" href="#">テーピング補充を注文する</a>
-  </section>
+      <section>
+        <h2>相談・注文</h2>
+        <a id="btn-line" class="btn btn-line" href="#">LINEで相談する</a>
+        <a class="btn btn-primary" href="#">来院予約をする</a>
+        <a class="btn btn-outline" href="#">テーピング補充を注文する</a>
+      </section>
+    </div>
+
+    <aside class="ig-aside">
+      <section id="ig-section">
+        <h2>心身堂からのお知らせ</h2>
+        <p style="font-size:13px;color:var(--color-text-sub);margin:0 0 8px;">Instagram投稿から、スポーツ現場に役立つ情報をお届けします。</p>
+        <div class="audience-tabs" id="audience-tabs"></div>
+        <div id="posts-list"></div>
+        <p id="posts-empty" class="empty-msg" hidden>該当する投稿はまだありません。</p>
+        <button id="posts-toggle" class="clear-btn" hidden></button>
+      </section>
+    </aside>
+  </div>
 </main>
 
 <footer class="site-footer">
