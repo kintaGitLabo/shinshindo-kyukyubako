@@ -62,6 +62,7 @@ function renderVideos() {
       <div class="row"><label>カテゴリ</label><select data-vpath="category">${cats}</select></div>
       <div class="row"><label>タグ（カンマ区切り）</label><input data-vtags></div>
       <div class="row"><label>動画URL</label><input data-vpath="videoUrl" placeholder="YouTube URL"></div>
+      <div class="row"><label>動画の向き</label><select data-vorient><option value="landscape" ${v.orientation!=='portrait'?'selected':''}>横型（16:9）</option><option value="portrait" ${v.orientation==='portrait'?'selected':''}>縦型（9:16 iPhone等）</option></select></div>
       <div class="row"><label>サムネイル</label><input data-vpath="thumbnail"></div>
       <div class="row"><label>説明文</label><textarea data-vpath="description"></textarea></div>
       <div class="row"><label>対象症状（1行1件）</label><textarea data-vlist="targetSymptoms"></textarea></div>
@@ -108,6 +109,8 @@ function renderVideos() {
     });
     const pubSel = details.querySelector('[data-vpub]');
     pubSel.onchange = () => { v.published = pubSel.value === 'true'; flag(); };
+    const orientSel = details.querySelector('[data-vorient]');
+    orientSel.onchange = () => { v.orientation = orientSel.value; flag(); };
 
     // actions
     details.querySelector('[data-act="preview"]').onclick = () => {
@@ -182,7 +185,8 @@ document.getElementById('add-video').onclick = () => {
     title: '新しい動画', category: data.categories[0]?.slug || '',
     tags: [], videoUrl: '', thumbnail: '', description: '',
     targetSymptoms: [], cautions: [], tapes: [], tips: [],
-    promoTitle: '', promoShort: '', published: false, order: maxOrder + 1
+    promoTitle: '', promoShort: '', orientation: 'landscape',
+    published: false, order: maxOrder + 1
   });
   flag();
   renderVideos();

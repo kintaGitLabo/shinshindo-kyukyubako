@@ -21,9 +21,10 @@ async function loadVideo() {
 
   const catName = (data.categories.find(c => c.slug === v.category) || {}).name || '';
   const embed = youtubeEmbed(v.videoUrl);
+  const orient = v.orientation === 'portrait' ? ' portrait' : '';
   const videoHtml = embed
-    ? `<div class="video-wrap"><iframe src="${embed}" allowfullscreen loading="lazy"></iframe></div>`
-    : `<div class="video-wrap"><div class="placeholder">動画は準備中です</div></div>`;
+    ? `<div class="video-wrap${orient}"><iframe src="${embed}" allowfullscreen loading="lazy"></iframe></div>`
+    : `<div class="video-wrap${orient}"><div class="placeholder">動画は準備中です</div></div>`;
 
   const lineLink = data.links.line || '#';
   const reserveLink = data.links.reserve || '#';
