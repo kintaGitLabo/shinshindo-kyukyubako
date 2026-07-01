@@ -5,5 +5,48 @@
     { "slug": "coach", "name": "コーチ向け" },
     { "slug": "sports", "name": "スポーツ全般" }
   ],
-  "posts": []
+  "posts": [
+    {
+      "url": "https://www.instagram.com/p/DZZRP2znTVv/",
+      "audience": ["parent"],
+      "comment": "県大会を支える保護者ができる4つのサポート。食事・痛みへの対応・試合後のケア・声かけまで、試合前後の関わり方をまとめました。",
+      "publishedAt": "2026-06-09",
+      "published": true
+    },
+    {
+      "url": "https://www.instagram.com/p/DZT3Y86nSfy/",
+      "audience": ["athlete", "parent", "coach", "sports"],
+      "comment": "大会当日のセルフケアチェックリスト。持ち物・試合前の動的ストレッチ・試合後のアイシング・RICE処置までまとめてあります。スクショ推奨。",
+      "publishedAt": "2026-06-07",
+      "published": true
+    },
+    {
+      "url": "https://www.instagram.com/p/DZMjH1JlOtv/",
+      "audience": ["athlete", "coach", "sports"],
+      "comment": "県大会前の1週間は追い込みより調整。練習後のクールダウンと違和感の早期対処で、本番のコンディションを整えましょう。",
+      "publishedAt": "2026-06-05",
+      "published": true
+    },
+    {
+      "url": "https://www.instagram.com/reel/DOFb3RaCWrf/",
+      "audience": ["athlete", "parent", "sports"],
+      "comment": "足首捻挫のリハビリは計画的に。再発予防までしっかり取り組むことが、次の試合を守ります。",
+      "publishedAt": "2025-09-01",
+      "published": true
+    },
+    {
+      "url": "https://www.instagram.com/reel/DJk59CTzf5i/",
+      "audience": ["athlete", "coach", "sports"],
+      "comment": "ハムストリング肉離れの実際のリハビリ風景（バスケットボール受傷例）。競技復帰までのプロセスをご覧ください。",
+      "publishedAt": "2025-05-12",
+      "published": true
+    },
+    {
+      "url": "https://www.instagram.com/reel/DIaYpcUTnos/",
+      "audience": ["parent", "sports"],
+      "comment": "成長期の足の痛み、我慢は禁物。早期のケアが早期復帰とパフォーマンス向上につながります。",
+      "publishedAt": "2025-04-13",
+      "published": true
+    }
+  ]
 }
