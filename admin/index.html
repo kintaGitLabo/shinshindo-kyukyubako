@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>管理画面 | 心身堂 救急箱サポート</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+  body { background: var(--color-bg-soft); }
+  .admin { max-width: 960px; margin: 0 auto; padding: 16px; }
+  .admin h1 { color: var(--color-primary-dark); font-size: 20px; margin: 8px 0 4px;}
+  .admin .desc { color: var(--color-text-sub); font-size: 13px; margin: 0 0 12px; }
+  .toolbar { display:flex; gap:8px; flex-wrap:wrap; margin: 12px 0 20px; }
+  .toolbar button, .toolbar label {
+    background: var(--color-primary); color:#fff; padding: 10px 14px;
+    border: 0; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;
+  }
+  .toolbar .secondary { background: #666; }
+  .card {
+    background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);
+    padding: 14px 16px; margin: 12px 0; box-shadow: var(--shadow);
+  }
+  .card h2 { font-size: 15px; margin: 0 0 8px; color: var(--color-primary-dark); }
+  .row { display:grid; grid-template-columns: 140px 1fr; gap: 8px 12px; align-items:start; margin: 6px 0; }
+  .row label { font-size: 13px; color: var(--color-text-sub); padding-top: 6px; }
+  .row input, .row textarea, .row select {
+    width: 100%; padding: 8px; border: 1px solid var(--color-border); border-radius: 6px;
+    font-family: inherit; font-size: 14px;
+  }
+  .row textarea { min-height: 60px; resize: vertical; }
+  .video-item summary {
+    cursor:pointer; padding: 6px 0; font-weight: 700;
+    display:flex; justify-content: space-between; align-items:center;
+  }
+  .actions { display:flex; gap:8px; margin-top: 10px; flex-wrap:wrap; }
+  .actions button { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--color-border); background:#fff; cursor:pointer; font-size:13px; }
+  .actions button.danger { color:#c0392b; border-color:#c0392b; }
+  .qr-box { display:inline-block; background:#fff; padding:8px; border:1px solid var(--color-border); border-radius:6px; margin-top: 8px; }
+  .status-bar {
+    position: sticky; top: 0; background: #fff; padding: 10px 12px;
+    border-bottom: 1px solid var(--color-border); z-index: 10;
+    display:flex; justify-content: space-between; align-items:center;
+  }
+  .status-bar .flag { font-size:12px; color: var(--color-text-sub); }
+  .dirty { color: #c0392b; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="status-bar">
+  <div><strong>心身堂 救急箱サポート — 管理画面</strong></div>
+  <div class="flag" id="dirty-flag">保存済み</div>
+</div>
+<div class="admin">
+  <p class="desc">
+    このページは <code>data/videos.json</code> をブラウザ上で編集し、ダウンロードするツールです。
+    編集後「JSONダウンロード」で保存し、サイトの <code>data/videos.json</code> を差し替えてください。
+  </p>
+
+  <div class="toolbar">
+    <label>
+      JSONを読み込む
+      <input type="file" id="load-file" accept="application/json" style="display:none">
+    </label>
+    <button id="reload-server">サーバーから再読込</button>
+    <button id="download">JSONダウンロード</button>
+    <button id="add-video" class="secondary">+ 動画を追加</button>
+  </div>
+
+  <div class="card">
+    <h2>サイト全体</h2>
+    <div class="row"><label>タイトル</label><input id="site-title" data-path="site.title"></div>
+    <div class="row"><label>サブタイトル</label><input id="site-subtitle" data-path="site.subtitle"></div>
+    <div class="row"><label>説明文</label><textarea data-path="site.description"></textarea></div>
+  </div>
+
+  <div class="card">
+    <h2>リンク</h2>
+    <div class="row"><label>LINE相談</label><input data-path="links.line"></div>
+    <div class="row"><label>LINE ID</label><input data-path="links.lineId"></div>
+    <div class="row"><label>来院予約</label><input data-path="links.reserve"></div>
+    <div class="row"><label>補充注文</label><input data-path="links.refill"></div>
+  </div>
+
+  <div class="card">
+    <h2>動画一覧</h2>
+    <div id="videos"></div>
+  </div>
+</div>
+
+<script src="qrcode.min.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
