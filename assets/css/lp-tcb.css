@@ -1,7 +1,8 @@
 /* =========================================================
-   TEAM CARE BOX LP — v3 "Opened Box" redesign
-   Design: The page IS the box you just opened. Each CTA is
-   a compartment/tray inside. 金城 is the guide next to it.
+   TEAM CARE BOX LP — v4 "Opened Box" simplified
+   Removes duplicate simple trays; each of the 3 sections is
+   now the primary CTA with icon + use-case + benefits + big
+   colored open button.
    ========================================================= */
 
 :root {
@@ -15,7 +16,11 @@
   --tcb-orange:     #F28C28;
   --tcb-orange-dk:  #C46A15;
   --tcb-green:      #16A34A;
+  --tcb-green-dk:   #0e7a37;
   --tcb-red:        #E45A2A;
+  --tcb-red-dk:     #B03E17;
+  --tcb-blue:       #4C7FE6;
+  --tcb-blue-dk:    #2d5cb8;
   --tcb-navy:       #3B2A18;
   --tcb-text:       #4A3720;
   --tcb-text-sub:   #8B6F47;
@@ -31,7 +36,6 @@ body {
 /* Desktop: constrain content width (hero background stays full-width,
    inner sections and their contents cap at 640px) */
 .tcb-hint,
-.tcb-box-body,
 .tcb-manual-wrap,
 .tcb-contact,
 .tcb-emergency,
@@ -58,7 +62,6 @@ body {
   overflow: hidden;
 }
 .tcb-hero::before {
-  /* stitched top edge (feels like box lid) */
   content: "";
   position: absolute;
   top: 8px; left: 12px; right: 12px;
@@ -66,7 +69,6 @@ body {
   border-top: 2px dashed rgba(255,240,210,0.35);
 }
 .tcb-hero::after {
-  /* corner brackets */
   content: "";
   position: absolute;
   inset: 0;
@@ -137,10 +139,10 @@ body {
   background: #FFF7E6;
   color: var(--tcb-text);
   border-radius: 10px 12px 12px 4px;
-  padding: 8px 12px;
+  padding: 10px 12px;
   font-size: 13px;
-  font-weight: 700;
-  line-height: 1.4;
+  font-weight: 600;
+  line-height: 1.55;
   position: relative;
   box-shadow: 0 2px 4px rgba(0,0,0,0.12);
 }
@@ -159,14 +161,15 @@ body {
   color: var(--tcb-text-sub);
   font-weight: 500;
   letter-spacing: 0.08em;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
-/* ---------- INSTRUCTION LINE ---------- */
+/* ---------- HINT LINE ---------- */
 .tcb-hint {
   text-align: center;
-  padding: 12px 16px 4px;
-  font-size: 12px;
+  padding: 16px 16px 4px;
+  font-size: 13px;
+  font-weight: 700;
   color: var(--tcb-text-sub);
   letter-spacing: 0.04em;
 }
@@ -176,48 +179,77 @@ body {
   width: 24px; height: 1px;
   background: var(--tcb-beige);
   vertical-align: middle;
-  margin: 0 8px;
+  margin: 0 10px;
 }
 
-/* ---------- TRAYS (3 CTAs) ---------- */
-.tcb-box-body {
-  margin: 6px 12px 18px;
-  background: var(--tcb-cream);
-  border: 2px solid var(--tcb-beige);
-  border-top: none;
-  border-radius: 0 0 14px 14px;
-  box-shadow: var(--tcb-shadow-in);
-  overflow: hidden;
+/* ---------- TOOL SECTIONS ---------- */
+.tcb-manual-wrap {
+  padding: 8px 0 8px;
 }
-.tcb-tray {
+.tcb-manual {
   position: relative;
-  display: grid;
-  grid-template-columns: 78px 1fr auto;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 14px 14px 16px;
-  text-decoration: none;
-  color: inherit;
-  background: var(--tcb-cream);
-  border-bottom: 2px dashed var(--tcb-beige-line);
-  transition: background 0.15s ease, transform 0.1s ease;
+  margin: 18px 14px;
+  padding: 20px 18px 20px;
+  background: #FFFCF3;
+  border: 1px solid var(--tcb-beige);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 6px 12px rgba(78, 55, 24, 0.10);
 }
-.tcb-tray:last-child { border-bottom: 0; }
-.tcb-tray:active { transform: scale(0.985); background: #FFF3DE; }
-.tcb-tray::before {
-  /* left side accent bar (tray color) */
+.tcb-manual::before {
+  /* colored top edge to distinguish sections */
   content: "";
   position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 4px;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 14px 14px 0 0;
 }
-.tcb-tray-1::before { background: var(--tcb-green); }
-.tcb-tray-2::before { background: var(--tcb-red); }
-.tcb-tray-3::before { background: #4C7FE6; }
+.tcb-manual-1::before { background: var(--tcb-green); }
+.tcb-manual-2::before { background: var(--tcb-red); }
+.tcb-manual-3::before { background: var(--tcb-blue); }
 
-.tcb-tray-visual {
-  width: 74px;
-  height: 60px;
+.tcb-manual-hd {
+  display: grid;
+  grid-template-columns: 40px 1fr 56px;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.tcb-manual-no {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.tcb-manual-1 .tcb-manual-no { background: var(--tcb-green); }
+.tcb-manual-2 .tcb-manual-no { background: var(--tcb-red); }
+.tcb-manual-3 .tcb-manual-no { background: var(--tcb-blue); }
+
+.tcb-manual-cat { min-width: 0; }
+.tcb-manual-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--tcb-text-sub);
+  margin-bottom: 1px;
+}
+.tcb-manual-cat b {
+  display: block;
+  color: var(--tcb-navy);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+.tcb-manual-icon {
+  width: 56px;
+  height: 48px;
   background: #fff;
   border: 2px solid #C9B18D;
   border-radius: 8px;
@@ -227,132 +259,52 @@ body {
   box-shadow:
     inset 0 -2px 0 rgba(0,0,0,0.06),
     0 2px 4px rgba(0,0,0,0.08);
-}
-.tcb-tray-visual svg { width: 44px; height: 44px; }
-
-.tcb-tray-body { min-width: 0; }
-.tcb-tray-label {
-  display: block;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  color: var(--tcb-text-sub);
-  margin-bottom: 2px;
-}
-.tcb-tray-title {
-  display: block;
-  font-size: 17px;
-  font-weight: 900;
-  color: var(--tcb-navy);
-  letter-spacing: 0.01em;
-  line-height: 1.25;
-}
-.tcb-tray-sub {
-  display: block;
-  font-size: 11px;
-  color: var(--tcb-text-sub);
-  margin-top: 3px;
-  font-weight: 500;
-}
-
-.tcb-tray-open {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: var(--tcb-orange);
-  color: #fff;
-  padding: 6px 12px 6px 14px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  box-shadow: 0 2px 0 rgba(0,0,0,0.08);
-  white-space: nowrap;
-}
-.tcb-tray-open::after {
-  content: "›";
-  font-size: 14px;
-  line-height: 1;
-}
-
-/* ---------- MANUAL SHEETS (appeal blocks) ---------- */
-.tcb-manual-wrap {
-  padding: 8px 4px 8px;
-}
-.tcb-manual {
-  position: relative;
-  margin: 18px 14px;
-  padding: 22px 18px 18px;
-  background: #FFFCF3;
-  border: 1px solid var(--tcb-beige);
-  border-radius: 4px;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.6) inset,
-    0 6px 12px rgba(78, 55, 24, 0.10);
-}
-.tcb-manual::before {
-  /* tape at top center */
-  content: "MEMO";
-  position: absolute;
-  top: -10px; left: 50%;
-  transform: translateX(-50%) rotate(-2deg);
-  background: rgba(242,140,40,0.35);
-  color: #6E5333;
-  border: 1px dashed rgba(110,83,51,0.4);
-  font-size: 9px;
-  letter-spacing: 0.24em;
-  font-weight: 800;
-  padding: 3px 22px;
-  border-radius: 2px;
-}
-.tcb-manual-hd {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-.tcb-manual-no {
-  width: 34px; height: 34px;
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
-  font-weight: 900;
-  color: #fff;
   flex-shrink: 0;
 }
-.tcb-manual-1 .tcb-manual-no { background: var(--tcb-green); }
-.tcb-manual-2 .tcb-manual-no { background: var(--tcb-red); }
-.tcb-manual-3 .tcb-manual-no { background: #4C7FE6; }
-.tcb-manual-cat {
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  color: var(--tcb-text-sub);
+.tcb-manual-icon svg { width: 36px; height: 36px; }
+
+/* Use-case description */
+.tcb-usecase {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--tcb-text);
+  background: var(--tcb-cream);
+  border: 1px dashed var(--tcb-beige);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin: 0 0 14px;
 }
-.tcb-manual-cat b {
-  color: var(--tcb-navy);
-  font-size: 15px;
+.tcb-usecase b {
+  display: inline-block;
+  background: var(--tcb-orange);
+  color: #fff;
+  font-size: 10px;
   font-weight: 900;
-  display: block;
-  letter-spacing: 0.03em;
-  margin-top: 2px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  margin-right: 6px;
+  vertical-align: 1px;
 }
+
+/* Voice quote */
 .tcb-voice {
   display: block;
-  background: var(--tcb-cream);
+  background: #fff;
   border-left: 3px solid var(--tcb-orange);
   padding: 8px 10px;
   font-size: 13px;
   color: var(--tcb-text);
-  margin: 8px 0 12px;
+  margin: 0 0 12px;
   font-weight: 700;
   border-radius: 0 6px 6px 0;
 }
 .tcb-voice::before { content: "「"; color: var(--tcb-orange); }
 .tcb-voice::after  { content: "」"; color: var(--tcb-orange); }
 
+/* Headline */
 .tcb-headline {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 900;
   color: var(--tcb-navy);
   margin: 0 0 12px;
@@ -363,10 +315,11 @@ body {
   padding: 0 2px;
 }
 
-.tcb-points { list-style: none; padding: 0; margin: 0 0 14px; }
+/* Points */
+.tcb-points { list-style: none; padding: 0; margin: 0 0 16px; }
 .tcb-points li {
   position: relative;
-  padding: 6px 0 6px 24px;
+  padding: 8px 0 8px 26px;
   font-size: 13px;
   line-height: 1.6;
   border-top: 1px dotted var(--tcb-beige);
@@ -376,12 +329,13 @@ body {
   content: "";
   position: absolute;
   left: 2px; top: 12px;
-  width: 14px; height: 14px;
+  width: 16px; height: 16px;
   background: var(--tcb-orange);
   clip-path: polygon(30% 55%, 44% 70%, 76% 30%, 100% 45%, 44% 100%, 12% 65%);
 }
 
-.tcb-reopen {
+/* Primary CTA button */
+.tcb-primary-cta {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -389,14 +343,28 @@ body {
   background: var(--tcb-orange);
   color: #fff;
   text-decoration: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-weight: 800;
-  font-size: 14px;
-  box-shadow: 0 3px 0 var(--tcb-orange-dk);
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 0 var(--tcb-orange-dk);
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
 }
-.tcb-manual-1 .tcb-reopen { background: var(--tcb-green); box-shadow: 0 3px 0 #0e7a37; }
-.tcb-manual-3 .tcb-reopen { background: #4C7FE6; box-shadow: 0 3px 0 #2d5cb8; }
+.tcb-primary-cta:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--tcb-orange-dk);
+}
+.tcb-primary-cta span:last-child {
+  font-size: 20px;
+  line-height: 1;
+}
+.tcb-manual-1 .tcb-primary-cta { background: var(--tcb-green); box-shadow: 0 4px 0 var(--tcb-green-dk); }
+.tcb-manual-1 .tcb-primary-cta:active { box-shadow: 0 2px 0 var(--tcb-green-dk); }
+.tcb-manual-2 .tcb-primary-cta { background: var(--tcb-red); box-shadow: 0 4px 0 var(--tcb-red-dk); }
+.tcb-manual-2 .tcb-primary-cta:active { box-shadow: 0 2px 0 var(--tcb-red-dk); }
+.tcb-manual-3 .tcb-primary-cta { background: var(--tcb-blue); box-shadow: 0 4px 0 var(--tcb-blue-dk); }
+.tcb-manual-3 .tcb-primary-cta:active { box-shadow: 0 2px 0 var(--tcb-blue-dk); }
 
 /* ---------- CONTACT ---------- */
 .tcb-contact {
@@ -493,6 +461,9 @@ body {
   .tcb-stamp-brand { font-size: 24px; }
   .tcb-guide-photo { width: 90px; height: 90px; }
   .tcb-guide { grid-template-columns: 90px 1fr; }
-  .tcb-tray-title { font-size: 19px; }
-  .tcb-headline { font-size: 20px; }
+  .tcb-manual-cat b { font-size: 21px; }
+  .tcb-headline { font-size: 22px; }
+  .tcb-manual-icon { width: 70px; height: 60px; }
+  .tcb-manual-icon svg { width: 44px; height: 44px; }
+  .tcb-manual-hd { grid-template-columns: 44px 1fr 70px; }
 }
