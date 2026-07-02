@@ -45,7 +45,12 @@ body {
   margin-right: auto;
 }
 .tcb-manual { max-width: none; }
-.tcb-guide { max-width: 480px; margin-left: auto; margin-right: auto; }
+.tcb-guide {
+  width: 80%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* ---------- HERO (BOX LID / OPENING) ---------- */
 .tcb-hero {
@@ -368,7 +373,9 @@ body {
 
 /* ---------- CONTACT ---------- */
 .tcb-contact {
-  margin: 4px 14px 0;
+  width: 80%;
+  max-width: 640px;
+  margin: 4px auto 0;
   padding: 16px 16px 12px;
   background: #fff;
   border: 1px solid var(--tcb-beige);
@@ -408,7 +415,9 @@ body {
 
 /* ---------- EMERGENCY ---------- */
 .tcb-emergency {
-  margin: 16px 14px;
+  width: 80%;
+  max-width: 640px;
+  margin: 16px auto;
   padding: 14px 16px;
   background: #fff;
   border-radius: 12px;
