@@ -57,12 +57,12 @@ async function publishVideos() {
   try {
     await ghPut('data/videos.json', JSON.stringify(data, null, 2), 'Update videos.json via admin panel');
     dirty = false; cleanFlag();
-    toast('✅ 動画データを保存しました。30秒〜2分で公開版に反映されます。', 'success');
+    toast('✅ サイト情報・動画データを保存しました。30秒〜2分で公開版に反映されます。', 'success');
   } catch (e) {
     toast('❌ 保存失敗: ' + e.message, 'error');
   } finally {
     btn.disabled = false;
-    btn.textContent = '💾 GitHubに保存（動画）';
+    btn.textContent = '💾 GitHubに保存（サイト・動画）';
   }
 }
 
