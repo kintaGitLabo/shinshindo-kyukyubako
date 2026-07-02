@@ -6,7 +6,7 @@ let postsDirty = false;
 let tcbDirty = false;
 
 // ===== GitHub API integration =====
-const GH_OWNER = 'kintaGitLabo';
+const GH_OWNER = 'shinshindo-okinawa';
 const GH_REPO = 'shinshindo-kyukyubako';
 const GH_BRANCH = 'main';
 
