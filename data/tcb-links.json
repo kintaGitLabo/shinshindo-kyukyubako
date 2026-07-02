@@ -1,0 +1,23 @@
+{
+  "cta": {
+    "taping": {
+      "label": "テーピングガイドを見る",
+      "sub": "動画で片手で確認",
+      "href": "https://past-octagon-97a.notion.site/390dbf40648880518640f442e46957fe",
+      "variant": "notion",
+      "note": "Notion管理。将来 /support/ の救急箱WEB内動画とA/Bテスト予定"
+    },
+    "symptom": {
+      "label": "症状を絞り込む",
+      "sub": "受診・応急処置の判断を後押し",
+      "href": "https://shinshindo-okinawa.github.io/symptom-checker/",
+      "note": "別リポジトリ shinshindo-okinawa/symptom-checker で公開済み"
+    },
+    "selfcare": {
+      "label": "セルフケアを見る",
+      "sub": "自宅で整える。試合前後・日常ケア",
+      "href": "https://past-octagon-97a.notion.site/22ddbf40648880ee9a30ce9bcdf1e697",
+      "note": "Notion管理（心身堂運用）"
+    }
+  }
+}

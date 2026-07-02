@@ -1,0 +1,172 @@
+/* =========================================================
+   TEAM CARE BOX LP — LP-specific styles
+   Relies on assets/css/style.css for shared variables & btn.
+   ========================================================= */
+
+:root {
+  --tcb-green: #22C55E;
+  --tcb-green-dark: #16A34A;
+  --tcb-navy: #1E3A5F;
+  --tcb-soft: #FFF7EE;
+}
+
+/* Hero */
+.tcb-hero {
+  padding: 20px 16px 8px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--tcb-soft) 0%, #fff 100%);
+}
+.tcb-hero h1 {
+  font-size: 22px;
+  color: var(--tcb-navy);
+  margin: 0 0 6px;
+  letter-spacing: 0.02em;
+}
+.tcb-hero p {
+  font-size: 14px;
+  color: var(--color-text-sub);
+  margin: 0;
+}
+
+/* Main CTA stack — always full-width, thumb-reachable */
+.tcb-cta-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.tcb-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 17px;
+  box-shadow: var(--shadow);
+  transition: transform 0.08s ease, box-shadow 0.15s ease;
+}
+.tcb-cta:active { transform: scale(0.98); }
+.tcb-cta .tcb-icon {
+  flex: 0 0 40px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  background: rgba(255,255,255,0.22);
+}
+.tcb-cta .tcb-body { flex: 1 1 auto; text-align: left; line-height: 1.35; }
+.tcb-cta .tcb-body .tcb-sub {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+.tcb-cta .tcb-arrow { font-size: 20px; opacity: 0.85; }
+
+.tcb-cta-taping   { background: var(--tcb-green); color: #fff; }
+.tcb-cta-taping:hover   { background: var(--tcb-green-dark); }
+.tcb-cta-symptom  { background: var(--color-primary); color: #fff; }
+.tcb-cta-symptom:hover  { background: var(--color-primary-dark); }
+.tcb-cta-selfcare {
+  background: #fff;
+  color: var(--color-primary-dark);
+  border: 2px solid var(--color-primary);
+}
+.tcb-cta-selfcare .tcb-icon { background: rgba(242,140,40,0.1); }
+
+/* Appeal blocks — one story per screen */
+.tcb-appeal {
+  padding: 24px 16px;
+  border-top: 1px solid var(--color-border);
+}
+.tcb-appeal:nth-of-type(odd)  { background: var(--color-bg-soft); }
+.tcb-appeal:nth-of-type(even) { background: #fff; }
+.tcb-appeal .tcb-appeal-inner {
+  max-width: 560px;
+  margin: 0 auto;
+}
+.tcb-voice {
+  font-size: 15px;
+  color: var(--color-text-sub);
+  margin: 0 0 4px;
+  font-style: italic;
+}
+.tcb-headline {
+  font-size: 20px;
+  color: var(--tcb-navy);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.tcb-points {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+}
+.tcb-points li {
+  position: relative;
+  padding: 6px 0 6px 26px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.tcb-points li::before {
+  content: "✓";
+  position: absolute;
+  left: 0; top: 6px;
+  color: var(--color-primary);
+  font-weight: 900;
+}
+.tcb-appeal-cta {
+  margin-top: 12px;
+}
+
+/* Contact section (reuse existing .btn classes) */
+.tcb-contact {
+  padding: 24px 16px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.tcb-contact h2 {
+  font-size: 18px;
+  color: var(--tcb-navy);
+  margin: 0 0 12px;
+  border-left: 4px solid var(--color-primary);
+  padding-left: 10px;
+}
+
+/* Emergency notice */
+.tcb-emergency {
+  margin: 8px 16px 24px;
+  padding: 14px 16px;
+  background: #FFF3F1;
+  border: 1px solid #F6C4BE;
+  border-radius: var(--radius);
+}
+.tcb-emergency h2 {
+  color: var(--color-danger);
+  font-size: 15px;
+  margin: 0 0 8px;
+}
+.tcb-emergency p { font-size: 13px; margin: 0 0 6px; }
+.tcb-emergency ul { margin: 4px 0 0; padding-left: 20px; font-size: 13px; }
+
+/* Footer tweak for LP */
+.tcb-footer {
+  text-align: center;
+  padding: 20px 16px;
+  color: var(--color-text-sub);
+  font-size: 12px;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Larger screens: keep single column but breathe more */
+@media (min-width: 640px) {
+  .tcb-hero h1 { font-size: 26px; }
+  .tcb-headline { font-size: 22px; }
+  .tcb-cta { font-size: 18px; min-height: 68px; }
+}

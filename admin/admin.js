@@ -1,7 +1,9 @@
 let data = null;
 let postsData = null;
+let tcbData = null;
 let dirty = false;
 let postsDirty = false;
+let tcbDirty = false;
 
 // ===== GitHub API integration =====
 const GH_OWNER = 'kintaGitLabo';
@@ -315,10 +317,11 @@ document.getElementById('add-video').onclick = () => {
 };
 
 window.addEventListener('beforeunload', e => {
-  if (dirty || postsDirty) { e.preventDefault(); e.returnValue = ''; }
+  if (dirty || postsDirty || tcbDirty) { e.preventDefault(); e.returnValue = ''; }
 });
 
 loadFromServer();
+loadTcb();
 
 // ---------- Instagram posts ----------
 async function loadPosts() {
@@ -400,3 +403,135 @@ document.getElementById('download-posts').onclick = () => {
 };
 
 loadPosts();
+
+// ---------- TEAM CARE BOX links ----------
+async function loadTcb() {
+  try {
+    const res = await fetch('../data/tcb-links.json?t=' + Date.now());
+    tcbData = await res.json();
+  } catch (e) {
+    console.error('[tcb] load failed', e);
+    tcbData = { cta: { taping: {}, symptom: {}, selfcare: {} } };
+  }
+  renderTcb();
+  renderTcbStats();
+}
+
+function flagTcb() {
+  tcbDirty = true;
+  const el = document.getElementById('dirty-flag');
+  el.textContent = '未保存の変更があります';
+  el.classList.add('dirty');
+}
+
+function renderTcb() {
+  document.querySelectorAll('#tcb-card [data-tpath]').forEach(el => {
+    el.value = get(tcbData, el.dataset.tpath) ?? '';
+    el.oninput = () => { set(tcbData, el.dataset.tpath, el.value); flagTcb(); };
+  });
+}
+
+function renderTcbStats() {
+  const box = document.getElementById('tcb-stats');
+  if (!box) return;
+  let counts = {};
+  try {
+    const raw = localStorage.getItem('tcb_click_count');
+    if (raw) counts = JSON.parse(raw);
+  } catch (_) {}
+  const labels = {
+    taping: '① テーピング（初回タップ）',
+    symptom: '② 症状絞り込み（初回タップ）',
+    selfcare: '③ セルフケア（初回タップ）',
+    taping_reopen: '① テーピング（再訴求ボタン）',
+    symptom_reopen: '② 症状絞り込み（再訴求ボタン）',
+    selfcare_reopen: '③ セルフケア（再訴求ボタン）',
+    line: 'LINEで相談',
+    reserve: '来院予約',
+    refill: 'テーピング補充'
+  };
+  const rows = Object.keys(labels).map(k => {
+    const c = counts[k] || 0;
+    return `<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed #eee;"><span>${labels[k]}</span><strong>${c}</strong></div>`;
+  }).join('');
+  box.innerHTML = rows + `<p style="font-size:11px;color:#999;margin:8px 0 0;">合計: ${Object.values(counts).reduce((a,b)=>a+b,0)}</p>`;
+}
+
+async function publishTcb() {
+  const btn = document.getElementById('tcb-publish');
+  btn.disabled = true;
+  const orig = btn.textContent;
+  btn.textContent = '保存中...';
+  try {
+    await ghPut('data/tcb-links.json', JSON.stringify(tcbData, null, 2), 'Update tcb-links.json via admin panel');
+    tcbDirty = false;
+    if (!dirty && !postsDirty) cleanFlag();
+    toast('✅ TCBリンクを保存しました。30秒〜2分で公開版に反映されます。', 'success');
+  } catch (e) {
+    toast('❌ 保存失敗: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = orig;
+  }
+}
+
+document.getElementById('tcb-reload').onclick = () => {
+  if (tcbDirty && !confirm('未保存の変更が失われます。再読込しますか？')) return;
+  loadTcb();
+};
+
+document.getElementById('tcb-download').onclick = () => {
+  const blob = new Blob([JSON.stringify(tcbData, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tcb-links.json';
+  a.click();
+};
+
+document.getElementById('tcb-publish').onclick = publishTcb;
+
+document.getElementById('tcb-preview').onclick = () => {
+  window.open('../team-care-box/', '_blank');
+};
+
+document.getElementById('tcb-qr').onclick = () => {
+  const container = document.getElementById('tcb-qr-container');
+  // Compose the public URL of the LP based on the current origin.
+  // On GitHub Pages the base path is /shinshindo-kyukyubako/team-care-box/
+  // Locally it's /team-care-box/ — respect whatever origin+path we're on.
+  const base = location.origin + location.pathname.replace(/\/admin\/.*$/, '');
+  const url = base + '/team-care-box/';
+  container.innerHTML = '';
+  const box = document.createElement('div');
+  box.className = 'qr-box';
+  const target = document.createElement('div');
+  box.appendChild(target);
+  new QRCode(target, { text: url, width: 240, height: 240, correctLevel: QRCode.CorrectLevel.M });
+  setTimeout(() => {
+    const canvas = target.querySelector('canvas');
+    if (canvas) {
+      const dl = document.createElement('a');
+      dl.textContent = '📥 PNGダウンロード: qr-team-care-box.png';
+      dl.style.display = 'block';
+      dl.style.marginTop = '8px';
+      dl.style.color = 'var(--color-primary-dark)';
+      dl.href = canvas.toDataURL('image/png');
+      dl.download = 'qr-team-care-box.png';
+      box.appendChild(dl);
+    }
+    const urlLine = document.createElement('div');
+    urlLine.style.fontSize = '11px';
+    urlLine.style.color = '#666';
+    urlLine.style.marginTop = '4px';
+    urlLine.style.wordBreak = 'break-all';
+    urlLine.textContent = url;
+    box.appendChild(urlLine);
+  }, 100);
+  container.appendChild(box);
+};
+
+document.getElementById('tcb-stats-clear').onclick = () => {
+  if (!confirm('この端末に保存されているクリックカウントをリセットしますか？')) return;
+  localStorage.removeItem('tcb_click_count');
+  renderTcbStats();
+};

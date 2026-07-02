@@ -110,6 +110,56 @@
     <div class="row"><label>補充注文</label><input data-path="links.refill"></div>
   </div>
 
+  <div class="card" id="tcb-card">
+    <h2>TEAM CARE BOX サポート — 3CTA リンク管理</h2>
+    <p class="desc" style="margin:0 0 10px;">
+      TEAM CARE BOX 貼付QRから開く <code>/team-care-box/</code> LPの、3つのメインCTAを管理します。
+    </p>
+
+    <details open>
+      <summary style="cursor:pointer;font-weight:700;color:var(--tcb-green,#22C55E);">① テーピングガイド（緑ボタン）</summary>
+      <div class="row"><label>ラベル</label><input data-tpath="cta.taping.label"></div>
+      <div class="row"><label>サブ文</label><input data-tpath="cta.taping.sub"></div>
+      <div class="row"><label>リンク先URL</label><input data-tpath="cta.taping.href" placeholder="https://..."></div>
+      <div class="row"><label>メモ</label><input data-tpath="cta.taping.note" placeholder="運用メモ"></div>
+    </details>
+
+    <details open style="margin-top:10px;">
+      <summary style="cursor:pointer;font-weight:700;color:var(--color-primary-dark);">② 症状絞り込み（オレンジボタン）</summary>
+      <div class="row"><label>ラベル</label><input data-tpath="cta.symptom.label"></div>
+      <div class="row"><label>サブ文</label><input data-tpath="cta.symptom.sub"></div>
+      <div class="row"><label>リンク先URL</label><input data-tpath="cta.symptom.href" placeholder="https://..."></div>
+      <div class="row"><label>メモ</label><input data-tpath="cta.symptom.note" placeholder="運用メモ"></div>
+    </details>
+
+    <details open style="margin-top:10px;">
+      <summary style="cursor:pointer;font-weight:700;color:var(--color-primary-dark);">③ セルフケア（白抜きボタン）</summary>
+      <div class="row"><label>ラベル</label><input data-tpath="cta.selfcare.label"></div>
+      <div class="row"><label>サブ文</label><input data-tpath="cta.selfcare.sub"></div>
+      <div class="row"><label>リンク先URL</label><input data-tpath="cta.selfcare.href" placeholder="https://..."></div>
+      <div class="row"><label>メモ</label><input data-tpath="cta.selfcare.note" placeholder="運用メモ"></div>
+    </details>
+
+    <div class="toolbar" style="margin:16px 0 8px;">
+      <button id="tcb-reload">サーバーから再読込</button>
+      <button id="tcb-download">JSONダウンロード</button>
+      <button id="tcb-publish" class="primary-btn">💾 GitHubに保存（TCBリンク）</button>
+      <button id="tcb-qr" class="secondary">📱 LP QRコード生成</button>
+      <button id="tcb-preview" class="secondary">🔍 LPをプレビュー</button>
+    </div>
+    <div id="tcb-qr-container"></div>
+
+    <details style="margin-top: 14px;">
+      <summary style="cursor:pointer;color:var(--color-text-sub);font-size:13px;">📊 クリック計測（この端末のみ）</summary>
+      <p style="font-size:12px;color:var(--color-text-sub);margin:8px 0;">
+        LP訪問者ごとに<strong>各端末のlocalStorageに保存</strong>される簡易カウントです（本番集計ではありません）。
+        あなたがLPを実機テストした際のカウントがここに見えます。
+      </p>
+      <div id="tcb-stats" style="font-size:13px;background:#fff;padding:10px;border-radius:6px;border:1px solid var(--color-border);"></div>
+      <button id="tcb-stats-clear" class="danger" style="font-size:12px;padding:6px 12px;margin-top:8px;background:#fff;border:1px solid #c0392b;color:#c0392b;border-radius:6px;cursor:pointer;">この端末のカウントをリセット</button>
+    </details>
+  </div>
+
   <div class="card">
     <h2>動画一覧</h2>
     <div id="videos"></div>
