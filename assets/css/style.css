@@ -68,12 +68,12 @@ a { color: var(--color-primary-dark); }
 
 @media (min-width: 900px) {
   .content-grid[data-layout="left"] {
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 380px 1fr;
   }
   .content-grid[data-layout="left"] .ig-aside { grid-column: 1; grid-row: 1; }
   .content-grid[data-layout="left"] .main-col { grid-column: 2; grid-row: 1; margin: 0; }
   .content-grid[data-layout="right"] {
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: 1fr 380px;
   }
   .content-grid[data-layout="right"] .main-col { grid-column: 1; grid-row: 1; margin: 0; }
   .content-grid[data-layout="right"] .ig-aside { grid-column: 2; grid-row: 1; }
@@ -84,23 +84,39 @@ a { color: var(--color-primary-dark); }
     max-height: calc(100vh - 24px);
     overflow-y: auto;
   }
+  /* Instagram official minimum width is 326px; give safe padding */
+  .content-grid[data-layout="left"] .ig-card,
+  .content-grid[data-layout="right"] .ig-card {
+    padding: 12px 10px;
+  }
+  .content-grid[data-layout="left"] .instagram-media,
+  .content-grid[data-layout="right"] .instagram-media {
+    min-width: 326px !important;
+  }
 }
 
 /* Mobile — always stack, videos first, IG below */
 @media (max-width: 899px) {
   .content-grid { grid-template-columns: 1fr; }
-  .layout-switcher { display: none; }
   .content-grid .main-col { grid-row: 1; }
   .content-grid .ig-aside { grid-row: 2; }
   #ig-section h2 { font-size: 16px; }
-  .ig-card { padding: 10px; }
-  #posts-list.compact { max-height: 720px; overflow: hidden; position: relative; }
-  #posts-list.compact::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
-    background: linear-gradient(transparent, #fff);
-    pointer-events: none;
-  }
+}
+
+/* Compact mode: hide all posts after first, without clipping the first */
+#posts-list.compact .ig-card:not(:first-child) { display: none; }
+#posts-toggle {
+  display: block;
+  margin: 12px auto 0;
+  padding: 10px 20px;
+  background: var(--color-primary);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 /* Header */

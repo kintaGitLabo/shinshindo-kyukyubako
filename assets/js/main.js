@@ -9,6 +9,9 @@ async function loadTop() {
   document.getElementById('site-subtitle').textContent = allData.site.subtitle;
   document.getElementById('site-description').textContent = allData.site.description;
 
+  const layout = allData.site.layout || 'stack';
+  document.getElementById('content-grid').dataset.layout = layout;
+
   const noticeUl = document.getElementById('emergency-list');
   allData.emergencyNotices.forEach(t => {
     const li = document.createElement('li'); li.textContent = t; noticeUl.appendChild(li);
@@ -118,20 +121,4 @@ function updateClearBtn() {
   btn.hidden = !(state.query || state.category || state.tag);
 }
 
-function initLayoutSwitcher() {
-  const grid = document.getElementById('content-grid');
-  const buttons = document.querySelectorAll('.layout-btn');
-  const saved = localStorage.getItem('igLayout') || 'stack';
-  const apply = layout => {
-    grid.dataset.layout = layout;
-    buttons.forEach(b => b.classList.toggle('active', b.dataset.layout === layout));
-    localStorage.setItem('igLayout', layout);
-  };
-  apply(saved);
-  buttons.forEach(b => b.onclick = () => apply(b.dataset.layout));
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  loadTop();
-  initLayoutSwitcher();
-});
+document.addEventListener('DOMContentLoaded', loadTop);
