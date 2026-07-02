@@ -16,6 +16,8 @@
     border: 0; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;
   }
   .toolbar .secondary { background: #666; }
+  .toolbar .primary-btn { background: #2ecc71; }
+  .actions button.danger { color:#c0392b; border-color:#c0392b; }
   .card {
     background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius);
     padding: 14px 16px; margin: 12px 0; box-shadow: var(--shadow);
@@ -50,11 +52,32 @@
   <div><strong>心身堂 救急箱サポート — 管理画面</strong></div>
   <div class="flag" id="dirty-flag">保存済み</div>
 </div>
+<div id="publish-toast" hidden style="position:fixed;top:60px;right:16px;background:#333;color:#fff;padding:12px 16px;border-radius:8px;z-index:100;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,.2);"></div>
 <div class="admin">
   <p class="desc">
-    このページは <code>data/videos.json</code> をブラウザ上で編集し、ダウンロードするツールです。
-    編集後「JSONダウンロード」で保存し、サイトの <code>data/videos.json</code> を差し替えてください。
+    このページは <code>data/videos.json</code> と <code>data/posts.json</code> をブラウザ上で編集します。
+    GitHub Personal Access Token（PAT）を登録すれば、「GitHubに保存」ボタンで即座に本番サイトへ反映できます（30秒〜2分後に公開版へ反映）。
   </p>
+
+  <details class="card" id="settings-card">
+    <summary style="cursor:pointer;font-weight:700;color:var(--color-primary-dark);">⚙️ 設定（GitHub保存トークン）</summary>
+    <p style="font-size:13px;color:var(--color-text-sub);margin:10px 0;">
+      GitHubに保存機能を使うには、Fine-grained PATが必要です。<br>
+      <strong>作成手順:</strong>
+      <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">こちらから発行</a>
+      → Resource owner: <code>kintaGitLabo</code>
+      → Only select repositories: <code>shinshindo-kyukyubako</code>
+      → Repository permissions: <strong>Contents = Read and write</strong>
+      → Generate → 生成された <code>github_pat_...</code> をコピーして下のフォームに貼り付け。
+    </p>
+    <div class="row"><label>GitHub PAT</label><input type="password" id="gh-token" placeholder="github_pat_..." autocomplete="off"></div>
+    <div class="actions">
+      <button id="save-token">トークンを保存</button>
+      <button id="clear-token" class="danger">トークンを削除</button>
+      <button id="test-token">接続テスト</button>
+    </div>
+    <p id="token-status" style="font-size:13px;margin:8px 0 0;"></p>
+  </details>
 
   <div class="toolbar">
     <label>
@@ -63,6 +86,7 @@
     </label>
     <button id="reload-server">サーバーから再読込</button>
     <button id="download">JSONダウンロード</button>
+    <button id="publish-videos" class="primary-btn">💾 GitHubに保存（動画）</button>
     <button id="add-video" class="secondary">+ 動画を追加</button>
   </div>
 
@@ -97,6 +121,7 @@
     <div class="toolbar" style="margin:8px 0;">
       <button id="add-post" class="secondary">+ 投稿を追加</button>
       <button id="download-posts">投稿JSONダウンロード</button>
+      <button id="publish-posts" class="primary-btn">💾 GitHubに保存（投稿）</button>
     </div>
     <div id="posts-admin"></div>
   </div>

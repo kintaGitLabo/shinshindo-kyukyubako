@@ -3,6 +3,126 @@ let postsData = null;
 let dirty = false;
 let postsDirty = false;
 
+// ===== GitHub API integration =====
+const GH_OWNER = 'kintaGitLabo';
+const GH_REPO = 'shinshindo-kyukyubako';
+const GH_BRANCH = 'main';
+
+function getToken() {
+  return localStorage.getItem('ghToken') || '';
+}
+function setToken(t) {
+  if (t) localStorage.setItem('ghToken', t);
+  else localStorage.removeItem('ghToken');
+}
+function toast(msg, type = 'info') {
+  const t = document.getElementById('publish-toast');
+  t.textContent = msg;
+  t.style.background = type === 'error' ? '#c0392b' : type === 'success' ? '#2ecc71' : '#333';
+  t.hidden = false;
+  clearTimeout(t._h);
+  t._h = setTimeout(() => { t.hidden = true; }, 5000);
+}
+
+// UTF-8 safe base64 encode
+function b64(str) {
+  return btoa(String.fromCharCode(...new TextEncoder().encode(str)));
+}
+
+async function ghGet(path) {
+  const res = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}?ref=${GH_BRANCH}`, {
+    headers: { 'Authorization': `Bearer ${getToken()}`, 'Accept': 'application/vnd.github+json' }
+  });
+  if (!res.ok) throw new Error(`GET ${path}: ${res.status} ${await res.text()}`);
+  return res.json();
+}
+
+async function ghPut(path, content, message) {
+  const token = getToken();
+  if (!token) throw new Error('GitHubトークンが未設定です。設定から登録してください。');
+  const current = await ghGet(path);
+  const res = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`, {
+    method: 'PUT',
+    headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, content: b64(content), sha: current.sha, branch: GH_BRANCH })
+  });
+  if (!res.ok) throw new Error(`PUT ${path}: ${res.status} ${await res.text()}`);
+  return res.json();
+}
+
+async function publishVideos() {
+  const btn = document.getElementById('publish-videos');
+  btn.disabled = true;
+  btn.textContent = '保存中...';
+  try {
+    await ghPut('data/videos.json', JSON.stringify(data, null, 2), 'Update videos.json via admin panel');
+    dirty = false; cleanFlag();
+    toast('✅ 動画データを保存しました。30秒〜2分で公開版に反映されます。', 'success');
+  } catch (e) {
+    toast('❌ 保存失敗: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '💾 GitHubに保存（動画）';
+  }
+}
+
+async function publishPosts() {
+  const btn = document.getElementById('publish-posts');
+  btn.disabled = true;
+  btn.textContent = '保存中...';
+  try {
+    await ghPut('data/posts.json', JSON.stringify(postsData, null, 2), 'Update posts.json via admin panel');
+    postsDirty = false;
+    toast('✅ 投稿データを保存しました。30秒〜2分で公開版に反映されます。', 'success');
+  } catch (e) {
+    toast('❌ 保存失敗: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '💾 GitHubに保存（投稿）';
+  }
+}
+
+function initSettings() {
+  const input = document.getElementById('gh-token');
+  const status = document.getElementById('token-status');
+  const stored = getToken();
+  if (stored) {
+    input.placeholder = '保存済み: ' + stored.slice(0, 10) + '...（変更する場合のみ入力）';
+    status.textContent = '✓ トークンは保存済みです';
+    status.style.color = '#2ecc71';
+  }
+  document.getElementById('save-token').onclick = () => {
+    const v = input.value.trim();
+    if (!v) { status.textContent = 'トークンを入力してください'; status.style.color = '#c0392b'; return; }
+    setToken(v);
+    input.value = '';
+    input.placeholder = '保存済み: ' + v.slice(0, 10) + '...';
+    status.textContent = '✓ 保存しました'; status.style.color = '#2ecc71';
+  };
+  document.getElementById('clear-token').onclick = () => {
+    if (confirm('保存済みトークンを削除しますか？')) {
+      setToken('');
+      input.value = ''; input.placeholder = 'github_pat_...';
+      status.textContent = 'トークンを削除しました'; status.style.color = '#c0392b';
+    }
+  };
+  document.getElementById('test-token').onclick = async () => {
+    if (!getToken()) { status.textContent = 'トークンを先に保存してください'; status.style.color = '#c0392b'; return; }
+    status.textContent = '接続中...'; status.style.color = '#666';
+    try {
+      await ghGet('data/videos.json');
+      status.textContent = '✅ 接続成功。書き込み可能です。';
+      status.style.color = '#2ecc71';
+    } catch (e) {
+      status.textContent = '❌ 接続失敗: ' + e.message;
+      status.style.color = '#c0392b';
+    }
+  };
+  document.getElementById('publish-videos').onclick = publishVideos;
+  document.getElementById('publish-posts').onclick = publishPosts;
+}
+initSettings();
+
 const $ = sel => document.querySelector(sel);
 const flag = () => {
   dirty = true;
