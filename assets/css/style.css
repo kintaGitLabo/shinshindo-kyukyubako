@@ -348,3 +348,107 @@ section h2 {
   color: var(--color-primary-dark);
   text-decoration: none;
 }
+
+/* Refill sets (補充セット価格表) */
+.refill-sets {
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  margin: 16px 0 8px;
+  background: #FFF8F1;
+}
+.refill-sets__note {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+.refill-sets__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.refill-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 6px 10px;
+  text-align: center;
+}
+.refill-card__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+.refill-card__name {
+  margin: 6px 0 4px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  min-height: 2.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.refill-card__img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  display: block;
+  margin: 0 0 6px;
+}
+.refill-card__ph {
+  background: var(--color-bg-soft);
+  border: 1px dashed var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text-sub);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.refill-card__price {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+.refill-card__tax { font-size: 10px; font-weight: 700; margin-right: 2px; }
+.refill-card__yen { font-size: 11px; font-weight: 700; }
+.refill-card__spec {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--color-text-sub);
+}
+.refill-sets__single {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--color-bg-soft);
+  border-radius: 8px;
+  padding: 8px;
+}
+.refill-flow {
+  margin: 6px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+@media (max-width: 360px) {
+  .refill-card__price { font-size: 17px; }
+  .refill-card__name { font-size: 11px; }
+}
